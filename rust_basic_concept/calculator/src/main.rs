@@ -1,18 +1,43 @@
-// simple calculator in Rust
+use std::io;
 
-fn main(){
-    let num1 =10;
-    let num2 =5;
+fn main() {
+    let mut input = String::new();
 
-    let sum =num1+num2;
-    println!("The sum of {} and {} is {}", num1, num2, sum);
+    // First number
+    println!("Enter first number:");
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read line");
 
-    let diff= num1- num2;
-    println!("The difference of {} and {} is {}", num1, num2, diff);
+    let num1: i32 = input.trim().parse().expect("Please enter a valid number");
+    input.clear();
 
+    // Second number
+    println!("Enter second number:");
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read line");
+
+    let num2: i32 = input.trim().parse().expect("Please enter a valid number");
+
+    // Calculations
+    let sum = num1 + num2;
+    let diff = num1 - num2;
     let product = num1 * num2;
-    println!("The product of {} and {} is {}", num1, num2, product);
 
-    let quotient = num1 / num2;
-    println!("The quotient of {num1} and {num2} is {quotient}");
+    let quotient = if num2 != 0 {
+        Some(num1 / num2)
+    } else {
+        None
+    };
+
+    println!("\nResults:");
+    println!("Sum: {}", sum);
+    println!("Difference: {}", diff);
+    println!("Product: {}", product);
+
+    match quotient {
+        Some(q) => println!("Quotient: {}", q),
+        None => println!("Cannot divide by zero"),
+    }
 }
